@@ -1,6 +1,7 @@
 package ru.job4j.array;
 
 
+import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -9,6 +10,7 @@ public class ArrayDuplicateTest {
     @Test
     public void whenRemoveDuplicatesThenArrayWithoutDuplicate() {
         ArrayDuplicate arrayDuplicate=new ArrayDuplicate();
-        assertThat(arrayDuplicate.remove(new String[]{"Привет", "Мир", "Привет", "Супер", "Мир"}),is(new String[]{"Привет", "Мир","Супер"}));
+        String[]example={"Привет", "Мир","Супер"};
+        assertThat(arrayDuplicate.remove(new String[]{"Привет", "Мир", "Привет", "Супер", "Мир"}),arrayContainingInAnyOrder(example));
     }
 }
