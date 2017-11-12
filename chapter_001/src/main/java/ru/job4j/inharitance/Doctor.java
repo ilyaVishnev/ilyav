@@ -1,8 +1,8 @@
 package ru.job4j.inharitance;
 
-public class Doctor extends Proffesion{
+public class Doctor extends Proffesion {
 public String directivity;
-public String cure(Engineer engineer){
-    return "Доктор "+this.GetName() +" лечит больного инженера "+engineer.GetName();
+public String cure(Engineer engineer) {
+    return "Доктор " + this.getName() + " лечит больного инженера " + engineer.getName();
 }
 }
