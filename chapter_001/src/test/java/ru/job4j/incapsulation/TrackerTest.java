@@ -10,11 +10,11 @@ public class TrackerTest {
     @Test
     public void whenUpdateNameThenReturnNewName() {
         Tracker tracker = new Tracker();
-        Item previous = new Task("test1","testDescription",123L);
+        Item previous = new Task("test1", "testDescription", 123L);
         // Добавляем заявку в трекер. Теперь в объект проинициализирован id.
         tracker.add(previous);
         // Создаем новую заявку.
-        Item next = new Task("test2","testDescription2",1234L);
+        Item next = new Task("test2", "testDescription2", 1234L);
         // Проставляем старый id из previous, который был сгенерирован выше.
         next.setId(previous.getId());
         // Обновляем заявку в трекере.
@@ -25,13 +25,10 @@ public class TrackerTest {
     @Test
     public void whenFindbyNameThenReturnArray() {
         Tracker tracker = new Tracker();
-        Item item2=new Task("test4","testDescription4",123456L);
-        Item item3=new Task("test4","testDescription5",1234567L);
-        Item item4=new Task("test5","testDescription6",12345678L);
-        tracker.add(item2);
-        tracker.add(item3);
-        Item[]result=tracker.findAll();
-        tracker.add(item4);
+        tracker.add(new Task("test4", "testDescription4", 123456L));
+        tracker.add(new Task("test4", "testDescription5", 1234567L));
+        Item[]result = tracker.findAll();
+        tracker.add(new Task("test5", "testDescription6", 12345678L));
         //Находим все заявки с одним именем.
         assertThat(tracker.findByName("test4"), is(result));
 
@@ -40,18 +37,16 @@ public class TrackerTest {
     @Test
     public void whenDeleteThenReturnWhithout() {
         Tracker tracker = new Tracker();
-        Item item2=new Task("test4","testDescription4",123456L);
-        Item item3=new Task("test4","testDescription5",1234567L);
-        Item item4=new Task("test5","testDescription6",12345678L);
-        tracker.add(item2);
-        tracker.add(item3);
-        Item[]resultBeg=new Item[tracker.findAll().length+1];
-        for(int i=0;i<tracker.findAll().length;i++){
-            resultBeg[i]=tracker.findAll()[i];
+        tracker.add(new Task("test4", "testDescription4", 123456L));
+        tracker.add(new Task("test4", "testDescription5", 1234567L));
+        Item[]Begin = new Item[tracker.findAll().length + 1];
+        for (int i = 0; i < tracker.findAll().length; i++) {
+            Begin[i] = tracker.findAll()[i];
         }
-        tracker.add(item4);
-        tracker.delete(item4);
-        Item[]resultEnd=tracker.findAll();
-        assertThat(resultBeg, arrayContainingInAnyOrder(resultEnd));
+        Item itemDel = new Task("test5", "testDescription6", 12345678L);
+        tracker.add(itemDel);
+        tracker.delete(itemDel);
+        Item[]End = tracker.findAll();
+        assertThat(Begin, arrayContainingInAnyOrder(End));
     }
 }

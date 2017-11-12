@@ -11,7 +11,7 @@ public class Tracker {
      * Указатель ячейки для новой заявки.
      */
     private int position = 0;
-    private final static Random RN=new Random();
+    private final static Random RN = new Random();
 
     /**
      * Метод реализаущий добавление заявки в хранилище
@@ -29,17 +29,17 @@ public class Tracker {
      * @return Уникальный ключ.
      */
     private String generateId() {
-        return String.valueOf(System.currentTimeMillis()+ RN.nextInt());
+        return String.valueOf(System.currentTimeMillis() + RN.nextInt());
     }
     /**
      * Метод возвращает Заявку по уник. ключу.
      * @return Заявка.
      */
-    protected Item findById(String id){
-        Item result=null;
-        for(Item item:items){
-            if(item!=null && item.getId().equals(id)){
-                result=item;
+    protected Item findById(String id) {
+        Item result = null;
+        for (Item item:items) {
+            if (item != null && item.getId().equals(id)) {
+                result = item;
                 break;
             }
         }
@@ -49,10 +49,10 @@ public class Tracker {
      * Метод возвращает полный список заявок.
      * @return Список.
      */
-    public Item[]findAll(){
+    public Item[]findAll() {
         Item[] result = new Item[this.position];
-        for(int index=0;index!=position;index++){
-            result[index]=this.items[index];
+        for (int index = 0; index != position; index++) {
+            result[index] = this.items[index];
         }
         return result;
     }
@@ -60,10 +60,10 @@ public class Tracker {
      * Метод находит заявку по уникальному ключу в списке и меняет её на указаную в параметре.
      * @return .
      */
-    public void update(Item item){
-     for(int index=0;index!=this.position;index++){
-         if(items[index]!=null && items[index].getId().equals(item.getId())){
-            items[index]=item;
+    public void update(Item item) {
+     for (int index = 0; index != this.position; index++) {
+         if (items[index] != null && items[index].getId().equals(item.getId())) {
+            items[index] = item;
             break;
          }
      }
@@ -72,10 +72,10 @@ public class Tracker {
      * Метод находит заявку по уникальному ключу в списке и удаляет её.
      * @return .
      */
-    public void delete(Item item){
-        for(int index=0;index!=this.position;index++){
-            if(items[index]!=null && items[index].getId().equals(item.getId())){
-                items[index]=null;
+    public void delete(Item item) {
+        for (int index = 0; index != this.position; index++) {
+            if (items[index] != null && items[index].getId().equals(item.getId())) {
+                items[index] = null;
                 break;
             }
         }
@@ -84,17 +84,17 @@ public class Tracker {
      * Метод находит список заявок с указанным именем.
      * @return Список.
      */
-    public Item[] findByName(String key){
-        Item[] Prevresult=new Item[this.position];
-        int i=0;
-        for(Item item:items){
-            if(item!=null && item.getName().equals(key)){
-                Prevresult[i++]=item;
+    public Item[] findByName(String key) {
+        Item[] prevresult = new Item[this.position];
+        int i = 0;
+        for (Item item:items) {
+            if (item != null && item.getName().equals(key)) {
+                prevresult[i++] = item;
             }
         }
-        Item[]result=new Item[i];
-        for(int j=0;j<i;j++){
-            result[j]=Prevresult[j];
+        Item[]result = new Item[i];
+        for (int j = 0; j < i; j++) {
+            result[j] = prevresult[j];
         }
         return result;
     }
