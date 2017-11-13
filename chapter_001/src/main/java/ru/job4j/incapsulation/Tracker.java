@@ -35,7 +35,7 @@ public class Tracker {
      * Метод возвращает Заявку по уник. ключу.
      * @return Заявка.
      */
-    protected Item findById(String id) {
+    public Item findById(String id) {
         Item result = null;
         for (Item item:items) {
             if (item != null && item.getId().equals(id)) {

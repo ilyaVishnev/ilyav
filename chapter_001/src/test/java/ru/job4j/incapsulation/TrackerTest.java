@@ -39,14 +39,14 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         tracker.add(new Task("test4", "testDescription4", 123456L));
         tracker.add(new Task("test4", "testDescription5", 1234567L));
-        Item[]Begin = new Item[tracker.findAll().length + 1];
+        Item[]begin = new Item[tracker.findAll().length + 1];
         for (int i = 0; i < tracker.findAll().length; i++) {
-            Begin[i] = tracker.findAll()[i];
+            begin[i] = tracker.findAll()[i];
         }
         Item itemDel = new Task("test5", "testDescription6", 12345678L);
         tracker.add(itemDel);
         tracker.delete(itemDel);
-        Item[]End = tracker.findAll();
-        assertThat(Begin, arrayContainingInAnyOrder(End));
+        Item[]end = tracker.findAll();
+        assertThat(begin, arrayContainingInAnyOrder(end));
     }
 }
