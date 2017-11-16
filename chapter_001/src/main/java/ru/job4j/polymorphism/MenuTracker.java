@@ -2,10 +2,13 @@ package ru.job4j.polymorphism;
 
 import ru.job4j.incapsulation.*;
 
-class FindItembyName implements UserAction {
-    @Override
-    public int key() {
-        return 5;
+class FindItembyName extends BaseAction {
+    /* @Override
+     public int key() {
+         return 5;
+     }*/
+    public FindItembyName(String nameInfo, int key) {
+        super(nameInfo, key);
     }
 
     @Override
@@ -19,10 +22,10 @@ class FindItembyName implements UserAction {
         }
     }
 
-    @Override
+    /*@Override
     public String info() {
         return String.format("%s. %s", this.key(), "find Item by name");
-    }
+    }*/
 }
 
 public class MenuTracker {
@@ -36,17 +39,17 @@ public class MenuTracker {
     }
 
     public void fillAction() {
-        this.actions[0] = new AddItem();
-        this.actions[1] = new ShowItems();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new DeleteItem();
-        this.actions[4] = new FindItembyId();
-        this.actions[5] = new FindItembyName();
+        this.actions[0] = new AddItem("add the new Item", 0);
+        this.actions[1] = new ShowItems("show all Items", 1);
+        this.actions[2] = new EditItem("edit Item", 2);
+        this.actions[3] = new DeleteItem("delete Item", 3);
+        this.actions[4] = new FindItembyId("find Item by id", 4);
+        this.actions[5] = new FindItembyName("find Item by name", 5);
     }
 
     public void select(Input input) {
-        int[]range={0,1,2,3,4,5};
-        this.actions[input.ask("Select: ",range)].execute(this.input, this.tracker);
+        int[] range = {0, 1, 2, 3, 4, 5};
+        this.actions[input.ask("Select: ", range)].execute(this.input, this.tracker);
     }
 
     public void show() {
@@ -57,31 +60,37 @@ public class MenuTracker {
         }
     }
 
-    private class AddItem implements UserAction {
-        @Override
-        public int key() {
-            return 0;
+    private class AddItem extends BaseAction {
+        /*   @Override
+           public int key() {
+               return 0;
+           }*/
+        public AddItem(String nameInfo, int key) {
+            super(nameInfo, key);
         }
 
         @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("Please , enter the task's name: ");
             String desc = input.ask("Please , enter the task's description: ");
-            Item item=new Task(name, desc);
+            Item item = new Task(name, desc);
             tracker.add(item);
             System.out.println("Новая заявка с getId : " + item.getId());
         }
 
-        @Override
+ /*       @Override
         public String info() {
-            return String.format("%s. %s", this.key(), "add the new Item");
-        }
+            return String.format("%s. %s", super.key, "add the new Item");
+        }*/
     }
 
-    private static class ShowItems implements UserAction {
-        @Override
-        public int key() {
-            return 1;
+    private static class ShowItems extends BaseAction {
+        /* @Override
+         public int key() {
+             return 1;
+         }*/
+        public ShowItems(String nameInfo, int key) {
+            super(nameInfo, key);
         }
 
         @Override
@@ -94,16 +103,19 @@ public class MenuTracker {
             }
         }
 
-        @Override
+       /* @Override
         public String info() {
             return String.format("%s. %s", this.key(), "show all Items");
-        }
+        }*/
     }
 
-    private static class EditItem implements UserAction {
-        @Override
-        public int key() {
-            return 2;
+    private static class EditItem extends BaseAction {
+        /* @Override
+         public int key() {
+             return 2;
+         }*/
+        public EditItem(String nameInfo, int key) {
+            super(nameInfo, key);
         }
 
         @Override
@@ -124,16 +136,19 @@ public class MenuTracker {
             System.out.println("Заявка отредактирована успешно");
         }
 
-        @Override
+    /*    @Override
         public String info() {
             return String.format("%s. %s", this.key(), "edit Item");
-        }
+        }*/
     }
 
-    private static class DeleteItem implements UserAction {
-        @Override
-        public int key() {
-            return 3;
+    private static class DeleteItem extends BaseAction {
+        /* @Override
+         public int key() {
+             return 3;
+         }*/
+        public DeleteItem(String nameInfo, int key) {
+            super(nameInfo, key);
         }
 
         @Override
@@ -152,16 +167,19 @@ public class MenuTracker {
             System.out.println("Заявка удалена");
         }
 
-        @Override
+        /*@Override
         public String info() {
             return String.format("%s. %s", this.key(), "delete Item");
-        }
+        }*/
     }
 
-    private static class FindItembyId implements UserAction {
-        @Override
-        public int key() {
-            return 4;
+    private static class FindItembyId extends BaseAction {
+        /* @Override
+         public int key() {
+             return 4;
+         }*/
+        public FindItembyId(String nameInfo, int key) {
+            super(nameInfo, key);
         }
 
         @Override
@@ -178,9 +196,9 @@ public class MenuTracker {
             System.out.println("Имя заявки: " + item.getName() + " описание заявки: " + item.getDesc());
         }
 
-        @Override
+  /*      @Override
         public String info() {
             return String.format("%s. %s", this.key(), "find Item by id");
-        }
+        }*/
     }
 }
