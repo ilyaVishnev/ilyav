@@ -44,8 +44,9 @@ public class MenuTracker {
         this.actions[5] = new FindItembyName();
     }
 
-    public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+    public void select(Input input) {
+        int[]range={0,1,2,3,4,5};
+        this.actions[input.ask("Select: ",range)].execute(this.input, this.tracker);
     }
 
     public void show() {
