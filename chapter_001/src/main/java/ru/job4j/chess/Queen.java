@@ -16,4 +16,7 @@ public class Queen extends Figure {
             throw new ImposibleMoveException();
         }
     }
+    public Figure clone(Cell dist){
+        return new Queen(dist);
+    }
 }

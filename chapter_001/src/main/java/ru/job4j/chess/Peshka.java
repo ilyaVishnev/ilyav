@@ -21,4 +21,7 @@ public class Peshka extends Figure {
         }
         return way;
     }
+    public Figure clone(Cell dist){
+        return new Peshka(dist);
+    }
 }

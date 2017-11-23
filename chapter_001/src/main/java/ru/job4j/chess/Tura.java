@@ -22,4 +22,7 @@ public class Tura extends Figure {
         }
         return way;
     }
+    public Figure clone(Cell dist){
+        return new Tura(dist);
+    }
 }

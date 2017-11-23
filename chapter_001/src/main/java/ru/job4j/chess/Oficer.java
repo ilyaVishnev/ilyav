@@ -20,4 +20,7 @@ public class Oficer extends Figure {
         }
         return way;
     }
+    public Figure clone(Cell dist){
+        return new Oficer(dist);
+    }
 }

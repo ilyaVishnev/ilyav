@@ -16,4 +16,7 @@ public class King extends Figure {
         }
         return way;
     }
+    public Figure clone(Cell dist){
+        return new King(dist);
+    }
 }
