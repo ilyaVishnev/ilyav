@@ -1,8 +1,10 @@
 package ru.job4j.polymorphism;
 
+import java.util.List;
+
 public class ValidateInput extends ConsoleInput {
 
-    public int ask(String question, int[] range) {
+    public int ask(String question, List<Integer> range) {
         int value = -1;
         boolean invalid = true;
         do {

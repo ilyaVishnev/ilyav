@@ -2,6 +2,9 @@ package ru.job4j.incapsulation;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -22,31 +25,36 @@ public class TrackerTest {
         // Проверяем, что заявка с таким id имеет новые имя test2.
         assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
     }
+
     @Test
     public void whenFindbyNameThenReturnArray() {
         Tracker tracker = new Tracker();
         tracker.add(new Task("test4", "testDescription4", 123456L));
         tracker.add(new Task("test4", "testDescription5", 1234567L));
-        Item[]result = tracker.findAll();
+        List<Item> result=new ArrayList<Item>();
+        result = tracker.findAll();
         tracker.add(new Task("test5", "testDescription6", 12345678L));
         //Находим все заявки с одним именем.
-        assertThat(tracker.findByName("test4"), is(result));
+        assertThat(tracker.findByName("test4").toArray(), is(result.toArray()));
 
     }
+
     //Проверка возможности удаления
     @Test
     public void whenDeleteThenReturnWhithout() {
         Tracker tracker = new Tracker();
         tracker.add(new Task("test4", "testDescription4", 123456L));
         tracker.add(new Task("test4", "testDescription5", 1234567L));
-        Item[]begin = new Item[tracker.findAll().length + 1];
-        for (int i = 0; i < tracker.findAll().length; i++) {
-            begin[i] = tracker.findAll()[i];
+        //Item[]begin = new Item[tracker.findAll().size() + 1];
+        List<Item> begin = new ArrayList<Item>();
+        for (int i = 0; i < tracker.findAll().size(); i++) {
+            begin.add(tracker.findAll().get(i));
         }
+        begin.add(null);
         Item itemDel = new Task("test5", "testDescription6", 12345678L);
         tracker.add(itemDel);
         tracker.delete(itemDel);
-        Item[]end = tracker.findAll();
-        assertThat(begin, arrayContainingInAnyOrder(end));
+        List<Item> end = tracker.findAll();
+        assertThat(begin.toArray(), arrayContainingInAnyOrder(end.toArray()));
     }
 }

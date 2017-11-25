@@ -2,17 +2,27 @@ package ru.job4j.polymorphism;
 
 import ru.job4j.incapsulation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class StartUI {
 
     private Input input;
+    public Tracker tracker = new Tracker();
 
     public StartUI(Input input) {
         this.input = input;
     }
 
+    public StartUI(Input input, Tracker tracker) {
+        this.input = input;
+        this.tracker = tracker;
+    }
+
     public void init() {
-        Tracker tracker = new Tracker();
-        MenuTracker menu = new MenuTracker(this.input, tracker);
+        ;
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
         menu.fillAction();
         do {
             menu.show();
@@ -27,7 +37,7 @@ public class StartUI {
      * @param args
      */
     public static void main(String[] args) {
-        Input input = new ValidateInput();
-        new StartUI(input).init();
+       Input input = new ValidateInput();
+       new StartUI(input).init();
     }
 }

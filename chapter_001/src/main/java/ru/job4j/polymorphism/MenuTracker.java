@@ -2,6 +2,9 @@ package ru.job4j.polymorphism;
 
 import ru.job4j.incapsulation.*;
 
+import java.lang.reflect.Array;
+import java.util.*;
+
 class FindItembyName extends BaseAction {
     /* @Override
      public int key() {
@@ -31,7 +34,8 @@ class FindItembyName extends BaseAction {
 public class MenuTracker {
     private Input input;
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[6];
+    //private UserAction[] actions = new UserAction[6];
+    private List<UserAction> actions = new ArrayList<UserAction>();
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -39,17 +43,19 @@ public class MenuTracker {
     }
 
     public void fillAction() {
-        this.actions[0] = new AddItem("add the new Item", 0);
+    /*    this.actions[0] = new AddItem("add the new Item", 0);
         this.actions[1] = new ShowItems("show all Items", 1);
         this.actions[2] = new EditItem("edit Item", 2);
         this.actions[3] = new DeleteItem("delete Item", 3);
         this.actions[4] = new FindItembyId("find Item by id", 4);
-        this.actions[5] = new FindItembyName("find Item by name", 5);
+        this.actions[5] = new FindItembyName("find Item by name", 5);*/
+        this.actions.addAll(Arrays.asList(new AddItem("add the new Item", 0), new ShowItems("show all Items", 1), new EditItem("edit Item", 2), new DeleteItem("delete Item", 3), new FindItembyId("find Item by id", 4), new FindItembyName("find Item by name", 5)));
     }
 
     public void select(Input input) {
-        int[] range = {0, 1, 2, 3, 4, 5};
-        this.actions[input.ask("Select: ", range)].execute(this.input, this.tracker);
+        List<Integer> range = new ArrayList<Integer>();
+        range.addAll(Arrays.asList(0, 1, 2, 3, 4, 5));
+        this.actions.get(input.ask("Select: ", range)).execute(this.input, this.tracker);
     }
 
     public void show() {
