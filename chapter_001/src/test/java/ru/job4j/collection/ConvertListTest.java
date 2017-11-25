@@ -3,7 +3,9 @@ package ru.job4j.collection;
 import ru.job4j.collection.ConvertList.*;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -44,5 +46,16 @@ public class ConvertListTest {
         list.add(6);
         list.add(7);
         assertThat(ConvertList.toArray(list, 3), arrayContainingInAnyOrder(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 0, 0}}));
+    }
+
+    @Test
+    public void whenListArraysThenList() {
+        List<int[]> list = new LinkedList<int[]>();
+        list.add(new int[]{1, 2});
+        list.add(new int[]{3, 4, 5, 6});
+        List<Integer> result = ConvertList.convert(list);
+        List<Integer> example = new LinkedList<Integer>();
+        example.addAll(Arrays.asList(1, 2, 3, 4, 5, 6));
+        assertThat(result.toArray(), arrayContainingInAnyOrder(example.toArray()));
     }
 }

@@ -24,4 +24,16 @@ public class ConvertList {
         }
         return array;
     }
+
+    public static List<Integer> convert(List<int[]> list) {
+        List<Integer> newlist = new LinkedList<Integer>();
+        Iterator<int[]> iterator = list.listIterator();
+        for (int i = 0; iterator.hasNext(); i++) {
+            int[] array = iterator.next();
+            for (int j = 0; j < array.length; j++) {
+                newlist.add(array[j]);
+            }
+        }
+        return newlist;
+    }
 }
