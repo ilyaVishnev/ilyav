@@ -3,15 +3,15 @@ package ru.job4j.sorting;
 import java.util.*;
 
 public class SortUser {
-    public static Set<User> sort(List<User> list) {
+    public Set<User> sort(List<User> list) {
         Set<User> set = new TreeSet<User>();
-        for (int i = 0; i < list.size(); i++) {
-            set.add(list.get(i));
+        for (User user : list) {
+            set.add(user);
         }
         return set;
     }
 
-    public static List<User> sortNameLength(List<User> list) {
+    public List<User> sortNameLength(List<User> list) {
         Collections.sort(list, new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
@@ -21,7 +21,7 @@ public class SortUser {
         return list;
     }
 
-    public static List<User> sortByAllFields(List<User> list) {
+    public List<User> sortByAllFields(List<User> list) {
         Collections.sort(list, new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
@@ -31,5 +31,4 @@ public class SortUser {
         });
         return list;
     }
-
 }
