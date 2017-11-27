@@ -3,7 +3,7 @@ package ru.job4j.collection;
 import java.util.*;
 
 public class ConvertList {
-    public  List<Integer> toList(int[][] array) {
+    public List<Integer> toList(int[][] array) {
         List<Integer> list = new LinkedList<Integer>();
         for (int[] firstArray : array) {
             for (int element : firstArray) {
@@ -28,8 +28,7 @@ public class ConvertList {
     public List<Integer> convert(List<int[]> list) {
         List<Integer> newlist = new LinkedList<Integer>();
         Iterator<int[]> iterator = list.listIterator();
-        for (int i = 0; iterator.hasNext(); i++) {
-            int[] array = iterator.next();
+        for (int[] array : list) {
             for (int j = 0; j < array.length; j++) {
                 newlist.add(array[j]);
             }
