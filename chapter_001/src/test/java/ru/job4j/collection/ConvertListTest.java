@@ -14,11 +14,13 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.*;
 
 public class ConvertListTest {
+    ConvertList convertList = new ConvertList();
+
     @Test
     public void whenArrayThenList() {
         List<Integer> list = new ArrayList<Integer>();
         int[][] array = new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};
-        list = ConvertList.toList(array);
+        list = convertList.toList(array);
         LinkedList<Integer> example = new LinkedList<Integer>();
         example.add(1);
         example.add(2);
@@ -45,7 +47,7 @@ public class ConvertListTest {
         list.add(5);
         list.add(6);
         list.add(7);
-        assertThat(ConvertList.toArray(list, 3), arrayContainingInAnyOrder(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 0, 0}}));
+        assertThat(convertList.toArray(list, 3), arrayContainingInAnyOrder(new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 0, 0}}));
     }
 
     @Test
@@ -53,7 +55,7 @@ public class ConvertListTest {
         List<int[]> list = new LinkedList<int[]>();
         list.add(new int[]{1, 2});
         list.add(new int[]{3, 4, 5, 6});
-        List<Integer> result = ConvertList.convert(list);
+        List<Integer> result = convertList.convert(list);
         List<Integer> example = new LinkedList<Integer>();
         example.addAll(Arrays.asList(1, 2, 3, 4, 5, 6));
         assertThat(result.toArray(), arrayContainingInAnyOrder(example.toArray()));
