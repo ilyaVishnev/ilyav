@@ -39,7 +39,11 @@ public class BankTest {
         Account anotherAccount = new Account(100, "acc3");
         bank.addUser(another);
         bank.addAccountToUser(another, anotherAccount);
+        Account change = new Account(6, "acc2");
         bank.transferMoney(me, account2, another, anotherAccount, 9);
-        assertThat(bank.getUserAccounts(me).toArray()[1].toString(), is("реквизиты: acc2 кол-во денег: 6.0"));
+        List<Account> example = new ArrayList<Account>();
+        example.add(account);
+        example.add(change);
+        assertThat(bank.getUserAccounts(me).toArray(), arrayContainingInAnyOrder(example.toArray()));
     }
 }
