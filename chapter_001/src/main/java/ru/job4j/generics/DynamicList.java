@@ -13,7 +13,7 @@ public class DynamicList<E> implements Iterable<E> {
 
             @Override
             public boolean hasNext() {
-                return indexIter <= index;
+                return indexIter < index;
             }
 
             @Override

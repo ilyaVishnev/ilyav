@@ -21,6 +21,11 @@ public class DynamicListTest {
         dynamicList.add(new Integer(23));
         dynamicList.add(new Integer(23));
         dynamicList.add(new Integer(23));
+        dynamicList.add(new Integer(23));
+        dynamicList.add(new Integer(23));
+        dynamicList.add(new Integer(23));
+        dynamicList.add(new Integer(23));
+        dynamicList.add(new Integer(23));
 
         Iterator<Integer> iterator = dynamicList.iterator();
         ArrayList<Integer> list = new ArrayList<>();
@@ -28,7 +33,7 @@ public class DynamicListTest {
             list.add(iterator.next());
         }
         ArrayList<Integer> example = new ArrayList<>();
-        example.addAll(Arrays.asList(23, 23, 23, 23, 23, 23, 23));
+        example.addAll(Arrays.asList(23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23, 23));
         assertThat(list.toArray(), arrayContainingInAnyOrder(example.toArray()));
     }
 }
