@@ -1,10 +1,10 @@
 package ru.job4j.generics;
 
-public abstract class AbstractStore {
+public abstract class AbstractStore <T extends Base> {
     SimpleArray<? extends Base> simpleArray;
 
 
-    abstract Base add(Base model);
+    abstract Base add(T model);
 
 
     public Base update(Base model) {

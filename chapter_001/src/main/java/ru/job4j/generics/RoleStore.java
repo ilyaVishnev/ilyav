@@ -1,18 +1,18 @@
 package ru.job4j.generics;
 
-public class RoleStore implements Store<Role> {
+public class RoleStore extends AbstractStore<Role> {
     SimpleArray<Role> simpleArray;
 
     public RoleStore(int size) {
         simpleArray = new SimpleArray<Role>(size);
     }
 
-    @Override
+ //   @Override
     public Role add(Role model) {
         return simpleArray.add(model);
     }
 
-    @Override
+/*    @Override
     public Role update(Role model) {
         for (int index = 0; index < simpleArray.getObjects().length; index++) {
             if (((Role) simpleArray.getObjects()[index]).id.equals(model.id)) {
@@ -34,5 +34,5 @@ public class RoleStore implements Store<Role> {
             }
         }
         return simpleArray.getObjects()[del] == null;
-    }
+    }*/
 }

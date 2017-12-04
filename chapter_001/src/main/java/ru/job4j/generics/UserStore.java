@@ -1,6 +1,6 @@
 package ru.job4j.generics;
 
-public class UserStore implements Store<User> {
+public class UserStore extends AbstractStore<User> {
     SimpleArray<User> simpleArray;
 
     public UserStore(int size) {
@@ -12,7 +12,7 @@ public class UserStore implements Store<User> {
         return simpleArray.add(model);
     }
 
-    @Override
+/*    @Override
     public User update(User model) {
         for (int index = 0; index < simpleArray.getObjects().length; index++) {
             if (((User) simpleArray.getObjects()[index]).id.equals(model.id)) {
@@ -34,5 +34,5 @@ public class UserStore implements Store<User> {
             }
         }
         return simpleArray.getObjects()[del] == null;
-    }
+    }*/
 }
