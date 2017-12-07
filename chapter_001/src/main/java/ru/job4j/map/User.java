@@ -13,8 +13,22 @@ public class User {
         this.birthday = birthday;
     }
 
-    @Override
+  /*@Override
     public int hashCode() {
         return name.hashCode() + children + birthday.hashCode();
+    }*/
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object)
+            return true;
+        if (object == null)
+            return false;
+        if (this.getClass() != object.getClass())
+            return false;
+        User another = (User) object;
+        if (!birthday.equals(another.birthday) || children != another.children || !name.equals(another.name))
+            return false;
+        return true;
     }
 }
