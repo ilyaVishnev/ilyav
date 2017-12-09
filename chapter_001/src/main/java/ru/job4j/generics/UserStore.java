@@ -1,16 +1,17 @@
 package ru.job4j.generics;
 
 public class UserStore extends AbstractStore<User> {
-    SimpleArray<User> simpleArray;
+    // SimpleArray<User> simpleArray;
 
     public UserStore(int size) {
-        simpleArray = new SimpleArray<User>(size);
+
+        super(size);
     }
 
-    @Override
+   /* @Override
     public User add(User model) {
         return simpleArray.add(model);
-    }
+    }*/
 
 /*    @Override
     public User update(User model) {
