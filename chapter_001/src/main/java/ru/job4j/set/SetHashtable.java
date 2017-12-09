@@ -5,14 +5,19 @@ import ru.job4j.generics.DynamicList;
 import java.util.Arrays;
 
 public class SetHashtable<E> {
-    int length = 10000;
+    int length = (int) Math.pow(2, 14);
     int size = 0;
     Object[] container = new Object[length];
 
     boolean add(E e) {
         if (!this.contains(e)) {
             if ((size > 0.75 * length)) {
-                container = Arrays.copyOf(container, container.length * 2);
+                Object[] exchange = container;
+                container = new Object[length = 2 * length];
+                for (Object object : exchange) {
+                    if (object != null)
+                        container[object.hashCode() & (length - 1)] = object;
+                }
             }
             container[e.hashCode() & (length - 1)] = e;
             size++;
