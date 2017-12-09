@@ -9,16 +9,19 @@ public class SimpleLinkedSet<E> implements Iterable<E> {
     int index = 0;
 
     void add(E e) {
-        boolean same = false;
-        for (int i = 0; i < index; i++) {
-            if (e.equals(dynamicLinkedList.get(i))) {
-                same = true;
-            }
-        }
-        if (!same || index == 0) {
+        if (!this.searchForDublicate(e) || index == 0) {
             dynamicLinkedList.add(e);
             index++;
         }
+    }
+
+    public boolean searchForDublicate(E e) {
+        for (int i = 0; i < index; i++) {
+            if (e.equals(dynamicLinkedList.get(i))) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
