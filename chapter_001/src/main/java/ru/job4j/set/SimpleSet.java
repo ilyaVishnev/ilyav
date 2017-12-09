@@ -1,25 +1,29 @@
 package ru.job4j.set;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import ru.job4j.generics.DynamicLinkedList;
+
+import java.util.*;
 
 public class SimpleSet<E> implements Iterable<E> {
     Object[] objects = new Object[10];
     int index = 0;
 
     void add(E e) {
-        boolean same = false;
-        for (Object element : objects) {
-            if (element != null && element.equals(e)) {
-                same = true;
-            }
-        }
-        if (!same) {
+        if (!this.searchForDublicate(e)) {
             if (objects[objects.length - 1] != null) {
                 objects = Arrays.copyOf(objects, objects.length * 2);
             }
             objects[index++] = e;
         }
+    }
+
+    public boolean searchForDublicate(E e) {
+        for (Object element : objects) {
+            if (element != null && element.equals(e)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -46,7 +50,10 @@ public class SimpleSet<E> implements Iterable<E> {
 
             @Override
             public E next() {
-                return (E) objects[indexIter++];
+                if (objects[indexIter++] != null) {
+                    return (E) objects[indexIter++];
+                }
+                throw new NoSuchElementException();
             }
 
             @Override
