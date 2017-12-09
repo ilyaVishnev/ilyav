@@ -1,17 +1,21 @@
 package ru.job4j.generics;
 
+import java.util.Iterator;
+
 public class ListNode<T> {
     boolean hasCycle(Node<T> first) {
         Node<T> node;
+        DynamicLinkedList<Node> dynamicLinkedList = new DynamicLinkedList<>();
         while (first != null) {
-            first = first.next;
-            node = first;
-            while (node != null) {
-                node = node.next;
-                if (first == node) {
+            node = first.next;
+            dynamicLinkedList.add(first);
+            Iterator<Node> iterator = dynamicLinkedList.iterator();
+            while (iterator.hasNext()) {
+                if (iterator.next() == node) {
                     return true;
                 }
             }
+            first = node;
         }
         return false;
     }

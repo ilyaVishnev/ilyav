@@ -13,17 +13,15 @@ public class ListNodeTest {
     @Test
     public void whenHaveCycleThenTrue() {
         ListNode listNode = new ListNode();
-        ListNode.Node node = listNode.new Node(1);
-        ListNode.Node node2 = listNode.new Node(2);
-        ListNode.Node node3 = listNode.new Node(3);
-        ListNode.Node node4 = listNode.new Node(4);
-        ListNode.Node node5 = listNode.new Node(5);
-        node.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
-        assertThat(listNode.hasCycle(node), is(false));
-        node4.next = node2;
-        assertThat(listNode.hasCycle(node), is(true));
+        ListNode.Node n1 = listNode.new Node(1);
+        ListNode.Node n2 = listNode.new Node(2);
+        ListNode.Node n3 = listNode.new Node(3);
+        ListNode.Node n4 = listNode.new Node(4);
+        ListNode.Node n5 = listNode.new Node(5);
+        n1.next = n2;
+        n2.next = n3;
+        n3.next = n4;
+        n4.next = n3;
+        assertThat(listNode.hasCycle(n1), is(true));
     }
 }
