@@ -12,7 +12,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             root = new Node<>(parent);
             rootFound = true;
         }
-        if (this.findBy(parent) != null) {
+        if (!this.findBy(child).isPresent()) {
             Optional<Node<E>> parentNode = this.findBy(parent);
             Node<E> childNode = new Node<>(child);
             parentNode.get().add(childNode);
@@ -20,10 +20,25 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         return false;
     }
 
-    // @Override
-    public Optional<Node<E>> findBy(E value) {
-        Optional<Node<E>> rsl = Optional.empty();
+    public boolean isBinary() {
         Queue<Node<E>> data = new LinkedList<>();
+        data.offer(this.root);
+        while (!data.isEmpty()) {
+            Node<E> el = data.poll();
+            if (el.leaves().size() > 2) {
+                return false;
+            }
+            for (Node<E> child : el.leaves()) {
+                data.offer(child);
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public Optional<Node<E>> findBy(E value) {
+        Queue<Node<E>> data = new LinkedList<>();
+        Optional<Node<E>> rsl = Optional.empty();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
