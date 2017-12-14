@@ -2,7 +2,7 @@ package ru.job4j.tree;
 
 import java.util.*;
 
-public class Tree<E extends Comparable<E>> implements SimpleTree<E>{
+public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     Node<E> root;
     boolean rootFound = false;
 
@@ -39,8 +39,28 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E>{
     }
 
     @Override
-    public Iterator iterator() {
-        return null;
+    public Iterator<E> iterator() {
+        return new Iterator() {
+            Queue<Node<E>> dataIterator = new LinkedList<>();
+            boolean rootFound = false;
+
+            @Override
+            public boolean hasNext() {
+                return !dataIterator.isEmpty();
+            }
+
+            @Override
+            public Object next() {
+                if (!rootFound) {
+                    dataIterator.offer(root);
+                    rootFound = true;
+                }
+                Node<E> next = dataIterator.poll();
+                for (Node<E> node : next.leaves())
+                    dataIterator.offer(node);
+                return next.value;
+            }
+        };
     }
 
     public class Node<E extends Comparable<E>> {
