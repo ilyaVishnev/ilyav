@@ -1,5 +1,6 @@
 package ru.job4j.tree;
 //
+
 import org.junit.Test;
 import ru.job4j.tree.*;
 
@@ -11,6 +12,7 @@ import java.util.*;
 import static org.hamcrest.collection.IsArrayContainingInAnyOrder.arrayContainingInAnyOrder;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+
 public class TreeTest {
     @Test
     public void when6ElFindLastThen6() {
@@ -35,8 +37,9 @@ public class TreeTest {
                 is(false)
         );
     }
+
     @Test
-    public void whenTreeisBinaryThenTrue(){
+    public void whenTreeisBinaryThenTrue() {
         Tree<Integer> tree = new Tree<>();
         tree.add(1, 2);
         tree.add(1, 3);
@@ -54,5 +57,22 @@ public class TreeTest {
                 tree2.isBinary(),
                 is(true)
         );
+    }
+
+    @Test
+    public void whenIteratorworksThengetNext() {
+        Tree<Integer> tree2 = new Tree<>();
+        tree2.add(1, 2);
+        tree2.add(1, 3);
+        tree2.add(2, 5);
+        tree2.add(2, 7);
+        List<Integer> list = new ArrayList<>();
+        Iterator<Integer> iterator = tree2.iterator();
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        List<Integer> example = new ArrayList<>();
+        example.addAll(Arrays.asList(1, 2, 3, 5, 7));
+        assertThat(list.toArray(), arrayContainingInAnyOrder(example.toArray()));
     }
 }
