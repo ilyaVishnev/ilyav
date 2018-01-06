@@ -19,12 +19,12 @@ public class ThreadPool extends Thread {
 
     public static void main(String[] args) {
         ThreadPool threadPool = new ThreadPool();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 35; i++) {
             final int j = i;
             threadPool.add(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("Решение задачи номер " + j);
+                    System.out.println("Решение задачи номер " + j + " выполнение потоком " + Thread.currentThread().getName());
                 }
             });
         }
