@@ -5,6 +5,7 @@ package ru.job4j.threads;
 import java.lang.*;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 public class Kash {
     ConcurrentHashMap<String, Model> concurrentHashMap = new ConcurrentHashMap();
@@ -17,9 +18,16 @@ public class Kash {
 
     public void update(Model model) {
         oldVersion = model.version;
-        concurrentHashMap.put(model.id, model);
-        if (concurrentHashMap.get(model.id).version != oldVersion)
+        if (concurrentHashMap.get(model.id).version != oldVersion) {
             throw new OplimisticException();
+        } else {
+            concurrentHashMap.computeIfPresent(model.id, new BiFunction<String, Model, Model>() {
+                @Override
+                public Model apply(String s, Model model) {
+                    return model;
+                }
+            });
+        }
     }
 
     public void delete(Model model) {
