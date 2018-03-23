@@ -17,17 +17,17 @@ public class Kash {
     }
 
     public void update(Model model) {
-        oldVersion = model.version;
-        if (concurrentHashMap.get(model.id).version != oldVersion) {
-            throw new OplimisticException();
-        } else {
             concurrentHashMap.computeIfPresent(model.id, new BiFunction<String, Model, Model>() {
                 @Override
                 public Model apply(String s, Model model) {
-                    return model;
+                    oldVersion = model.version;
+                    if (concurrentHashMap.get(model.id).version != oldVersion) {
+                        throw new OplimisticException();
+                    } else {
+                        return model;
+                    }
                 }
             });
-        }
     }
 
     public void delete(Model model) {
