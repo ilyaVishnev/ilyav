@@ -113,6 +113,8 @@ class MyConnection {
             ex.getMessage();
         }
 
+
+
     }
 
     public void fillingOfTable() throws SQLException {
