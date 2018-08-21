@@ -2,6 +2,8 @@ import javax.swing.text.Document;
 
 import org.jsoup.Jsoup;
 import org.jsoup.select.Elements;
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.rmi.runtime.Log;
@@ -9,50 +11,59 @@ import sun.rmi.runtime.Log;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
 
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
+import static org.quartz.TriggerBuilder.newTrigger;
+
 public class Parser {
 
+
+    public static final String PATH_TO_PROPERTIES = "chapter_002/src/main/resources/app.properties";
+    private static final Logger Log = LoggerFactory.getLogger(Parser.class);
     ThrowinDB throwinDB = new ThrowinDB();
-    Set<String> jobs = new HashSet<>();
+    Properties properties = this.fullProperties();
 
-    public static void main(String[] args) {
-        Timer timer = new Timer();
-        Date myDate = new Date();
-        MyTimerTask myTimerTask = new MyTimerTask();
-        timer.schedule(myTimerTask, myDate, 1000 * 60 * 60 * 24);
-
+    public static void main(String[] args) throws SchedulerException {
+        Parser parser = new Parser();
+        JobDetail job = newJob(MyJob.class)
+                .withIdentity("myJob", "group1")
+                .build();
+        Trigger trigger = newTrigger()
+                .withIdentity("myTrigger", "group1")
+                .startNow()
+                .withSchedule(cronSchedule(parser.properties.getProperty("cron.time")))
+                .build();
+        Scheduler scheduler = new StdSchedulerFactory().getScheduler();
+        scheduler.start();
+        scheduler.scheduleJob(job, trigger);
     }
 
     public void readPage(Date currentdate) {
+
         try {
             org.jsoup.nodes.Document document = Jsoup.connect("http://www.sql.ru/forum/job").get();
             org.jsoup.nodes.Element table = document.select("table.forumTable").first();
             Elements rows = table.select("tr");
-
             for (int i = 1; i < rows.size(); i++) {
                 org.jsoup.nodes.Element row = rows.get(i);
                 Elements cols = row.select("td");
                 org.jsoup.nodes.Element col = cols.get(1);
                 org.jsoup.nodes.Element date = cols.get(5);
                 if (this.compareDate(date.text().toString(), currentdate) && this.readCol(col.text().toString())) {
-                    jobs.add(col.text());
+                    throwinDB.execute(col.text());
                 }
             }
 
         } catch (IOException ex) {
             ex.getMessage();
-        }
-    }
-
-
-    public void insertDB() {
-        for (String job : jobs) {
-            throwinDB.execute(job);
         }
     }
 
@@ -109,7 +120,8 @@ public class Parser {
         }
         Integer month = this.getMonth(date);
         Integer day = this.getDay(date);
-        if (day > currentDate.getDay() && month > currentDate.getMonth() && Integer.parseInt(year) == currentDate.getYear() && hours > currentDate.getHours() && min > currentDate.getMinutes()) {
+        boolean first = day > currentDate.getDay() && month > currentDate.getMonth() && Integer.parseInt(year) == currentDate.getYear();
+        if (first && hours > currentDate.getHours() && min > currentDate.getMinutes()) {
             return true;
         } else {
             return false;
@@ -236,78 +248,20 @@ public class Parser {
         return Integer.parseInt(stringBuffer.reverse().toString());
     }
 
-}
-
-class ThrowinDB {
-    private static final Logger Log = LoggerFactory.getLogger(ThrowinDB.class);
-    private Connection connection;
-    private String url = "jdbc:postgresql://localhost:5432/from_one_to_n";
-    private String username = "postgres";
-    private String password = "pobeda";
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-
-    public void execute(String text) {
-
+    public Properties fullProperties() {
+        Properties properties = new Properties();
+        FileInputStream fileInputStream;
         try {
-            connection = DriverManager.getConnection(url, username, password);
-            resultSet = connection.getMetaData().getTables(null, null, "job", null);
-            if (!resultSet.next()) {
-                preparedStatement = connection.prepareStatement("CREATE TABLE Job(field text)");
-                preparedStatement.execute();
-            }
-            this.fillingOfTable(text);
+            fileInputStream = new FileInputStream(PATH_TO_PROPERTIES);
+            properties.load(fileInputStream);
 
-        } catch (SQLException ex) {
-            Log.error(ex.getMessage(), ex);
+            throwinDB.setUrl(properties.getProperty("jdbc.url"));
+            throwinDB.setUsername(properties.getProperty("jdbc.username"));
+            throwinDB.setPassword(properties.getProperty("jdbc.password"));
+        } catch (IOException ex) {
+            ex.getMessage();
         }
-    }
-
-    public void fillingOfTable(String text) {
-        try {
-            connection.setAutoCommit(false);
-            preparedStatement = connection.prepareStatement("insert into Job(FIELD) values(?)");
-            preparedStatement.setString(1, text);
-            preparedStatement.addBatch();
-            preparedStatement.executeBatch();
-            connection.commit();
-            preparedStatement.close();
-            connection.setAutoCommit(true);
-
-
-        } catch (SQLException ex) {
-            Log.error(ex.getMessage(), ex);
-        }
-
+        return properties;
     }
 }
 
-class MyTimerTask extends TimerTask {
-    private Date date = new Date(2018, 0, 1);
-    static Date newDate;
-    private static final Logger Log = LoggerFactory.getLogger(MyTimerTask.class);
-
-
-    @Override
-    public void run() {
-        Connection connection;
-        ResultSet resultSet;
-        boolean firstStep = false;
-        try {
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/from_one_to_n", "postgres", "pobeda");
-            resultSet = connection.getMetaData().getTables(null, null, "job", null);
-            if (resultSet.next()) {
-                firstStep = true;
-            }
-        } catch (Exception ex) {
-            Log.error(ex.getMessage(), ex);
-        }
-        Parser parser = new Parser();
-        if (firstStep) {
-            date = newDate;
-        }
-        parser.readPage(date);
-        parser.insertDB();
-        newDate = new Date();
-    }
-}
