@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.xml.bind.Element;
 import javax.xml.bind.JAXBContext;
@@ -27,7 +28,7 @@ public class SqlDatabase {
 
 
     public static void main(String[] args) {
-        MyConnection myConnection = new MyConnection();
+   /*     MyConnection myConnection = new MyConnection();
         try {
             myConnection.creatingOfTable();
             myConnection.createXml();
@@ -36,7 +37,9 @@ public class SqlDatabase {
 
         } catch (Exception ex) {
             ex.getMessage();
-        }
+        }*/
+   Date date=new Date();
+   System.out.print(date.getMinutes());
     }
 
 }
@@ -112,7 +115,6 @@ class MyConnection {
         } catch (Exception ex) {
             ex.getMessage();
         }
-
 
 
     }

@@ -1,8 +1,8 @@
-package ru.job4j.threads.Bomberman;
+package ru.job4j.threads.Bomberman.Bomberman2;
 
 import java.util.concurrent.locks.ReentrantLock;
 
-class Cell {
+public class Cell {
 
     private int x;
     private int y;
@@ -23,5 +23,9 @@ class Cell {
 
     public ReentrantLock getReentrantLock() {
         return reentrantLock;
+    }
+
+    public void setReentrantLock(ReentrantLock reentrantLock) {
+        this.reentrantLock = reentrantLock;
     }
 }
