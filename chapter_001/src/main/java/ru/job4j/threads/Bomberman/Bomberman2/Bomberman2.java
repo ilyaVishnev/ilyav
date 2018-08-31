@@ -16,13 +16,11 @@ public class Bomberman2 {
 
     public static void main(String[] args) {
         Bomberman2 bomberman = new Bomberman2();
-        bomberman.setBoard(7, 9);
+        bomberman.setBoard(9, 10);
         bomberman.setBlockedThread(1, 2);
         bomberman.setBlockedThread(2, 2);
-        bomberman.setPlayer(new Cell(0, 8), new Cell(3, 1));
+        bomberman.setPlayer(new Cell(0, 9), new Cell(3, 1));
         bomberman.setMonster("monster1", new Cell(5, 0), new Cell(5, 1));
-        bomberman.setMonster("monster2", new Cell(6, 7), new Cell(5, 7));
-
     }
 
     public void setBoard(int sizeX, int sizeY) {
